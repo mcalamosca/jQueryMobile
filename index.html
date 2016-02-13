@@ -5,32 +5,57 @@
 	<title>Ponder - Magic: the Gathering Card Search</title>
 	<link rel="stylesheet" href="themes/united.min.css" />
 	<link rel="stylesheet" href="themes/jquery.mobile.icons.min.css" />
-	<link r
-          el="stylesheet" href="jquery.mobile.structure-1.4.5.min.css" />
+	<link rel="stylesheet" href="assets/jquery.mobile-1.4.5/jquery.mobile.structure-1.4.5.min.css" />
 	<script src="assets/jquery-1.12.0.js"></script>
 	<script src="assets/jquery.mobile-1.4.5/jquery.mobile-1.4.5.min.js"></script>
-    <meta name="viewport" content="width=device-width"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     
     <script>
         $(document).ready(function(){
-            $("#btnsearch").click(function(){
+            $("#btnSearch").click(function(){
                 var cardName = $("txtSearch").val();
-                //getCardData(cardName);
+                getCardData(cardName);
             })
         })
         
         function getCardData(cardName){
+            var serviceUrl = "https://api.deckbrew.com/mtg/cards?name=Ponder";//+cardName;
             
+            $.get(serviceUrl, function(data){
+                console.log(data);
+                $("#name").html("Name of card: " + data.name);
+            });
         }
     </script>
 </head>
 <body>
-    <section id="cardsearch" data-role="page">
-        <h1>Ponder</h1>
-        <div id="search">
-            <input type="text" id="txtSearch" placeholder="Card Name" value="" />
-            <input type="button" id="btnSearch" value="Search" />
+    <section data-role="page" id="cardsearch">
+        <div data-role="main" class="ui-content">
+            <div data-role="header" class="logo">
+                <h1>Ponder</h1>
+            </div>
+            <div id="description">
+                <p>Enter card name to search for more information</p>
+            </div>
+            <div id="search">
+                <input type="text" id="txtSearch" placeholder="Card Name" value="" />
+                <input type="button" id="btnSearch" value="Search" />
+            </div>
+            <div data-role="footer">
+                <h2>&copy; Micah Calamosca 2016</h2>
+            </div>
         </div>
     </section>
+    
+    <div data-role="page" id="results" data-add-back-btn="true">
+        <div data-role="header">
+                <h1>Results</h1>
+        </div>
+        <div data-role="main" class="ui-content">
+            <div>
+                
+            </div>
+        </div>
+    </div>
 </body>
 </html>
