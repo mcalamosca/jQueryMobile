@@ -13,17 +13,27 @@
     <script>
         $(document).ready(function(){
             $("#btnSearch").click(function(){
-                var cardName = $("txtSearch").val();
+                var cardName = $("#txtSearch").val();
                 getCardData(cardName);
+                $.mobile.changePage('#results',{transition:"flip"});
             })
         })
         
         function getCardData(cardName){
-            var serviceUrl = "https://api.deckbrew.com/mtg/cards?name=Ponder";//+cardName;
+            var serviceUrl = "https://api.deckbrew.com/mtg/cards?name=" + cardName;
             
-            $.get(serviceUrl, function(data){
+            $.getJSON(serviceUrl, function(data){
                 console.log(data);
-                $("#name").html("Name of card: " + data.name);
+                $.each(data,function(object,key){
+                    console.log(key.name)
+                    
+                    $("ul").append("<li>Name: "+key.name+"</li><li>CMC: "+key.cmc+"</li><li>Type: "+key.types+"</li><li>Subtype: "+key.subtypes+"</li><li>Cost: "+key.cost+"</li><li><img src="+key.editions.image_url+"/></li><br />");
+                })
+                
+                
+                
+                //$("#name").html("Name of card: " + data.name);
+                
             });
         }
     </script>
@@ -53,7 +63,7 @@
         </div>
         <div data-role="main" class="ui-content">
             <div>
-                
+                <ul></ul>
             </div>
         </div>
     </div>
