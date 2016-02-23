@@ -9,9 +9,7 @@
 	<script src="assets/jquery-1.12.0.js"></script>
 	<script src="assets/jquery.mobile-1.4.5/jquery.mobile-1.4.5.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    
-    @import url(https://fonts.googleapis.com/css?family=Rye);
-    
+        
     <script>
         $(document).ready(function(){
             $("#btnSearch").click(function(){
@@ -22,7 +20,6 @@
             })
             $("#txtSearch").keyup(function(event){
             if(event.keyCode == 13){
-                console.log("enter");
                 $("#btnSearch").click();
             }
         })
@@ -33,18 +30,16 @@
             var serviceUrl = "https://api.deckbrew.com/mtg/cards?name=" + cardName; // + "&dt=" + new Date();
             console.log(serviceUrl);
             
+            //Get JSON object of cards and append to UL
             $.getJSON(serviceUrl, function(data){
-                // console.log(data);
+                //console.log(data);
                 $("ul").empty();
                 $.each(data,function(object,key){
                     //console.log(key.name)
                     
-                    $("ul").append("<img src=\""+key.editions[0].image_url+"\"/><li>Name: "+key.name+"</li><li>CMC: "+key.cmc+"</li><li>Type: "+key.types+"</li><li>Subtype: "+key.subtypes+"</li><li>Cost: "+key.cost+"</li><li>Text: "+key.text+"</li><li>Power: "+key.power+"</li><li>Toughness: "+key.toughness+"</li><br/>");
+                    $("ul").append("<img src=\""+key.editions[0].image_url+"\"style=\"max-width: 50%; height: auto;\"/><li>Name: "+key.name+"</li><li>CMC: "+key.cmc+"</li><li>Type: "+key.types+"</li><li>Subtype: "+key.subtypes+"</li><li>Cost: "+key.cost+"</li><li>Text: "+key.text+"</li><li>Power: "+key.power+"</li><li>Toughness: "+key.toughness+"</li><br/>");
                 })
-                
-                
-                //$("#name").html("Name of card: " + data.name);
-                
+                                
             });
         }
     </script>
@@ -52,19 +47,22 @@
 <body>
     <section data-role="page" id="cardsearch">
         <div data-role="main" class="ui-content">
-            <div data-role="header" class="logo">
-                <h1 style="font-size:50;">Ponder</h1>
+            <div data-role="header" class="logo" align="center">
+                <img src="magic.png" style="width: 45%; height: auto;"/>
             </div>
             <br/>
-            <div id="description" class="ui-body ui-body-a ui-corner-all" align="center">
-                <p>Enter card name to search for more information</p>
-            </div>
             <div id="search">
                 <input type="text" id="txtSearch" placeholder="Card Name" value="" />
                 <br/>
                 <input type="button" id="btnSearch" value="Search" />
                 
             </div>
+            <div id="description" class="ui-body ui-body-a ui-corner-all" align="center">
+                <p>Magic: the Gathering card search</p>
+                <p>Enter card name to search for more information</p>
+            </div>
+            
+            <br />
             <div data-role="footer">
                 <h2>&copy; Micah Calamosca 2016</h2>
             </div>
@@ -72,12 +70,12 @@
     </section>
     
     <div data-role="page" id="results" /*data-add-back-btn="true"*/>
-        <div data-role="header">
+        <div data-role="header"><a data-iconpos='left' data-icon='back' href='#' data-role='button' data-rel='back'>Back</a>
                 <h1>Results</h1>
         </div>
         <div data-role="main" class="ui-content">
             <div data-role="content" data-form="ui-body-a" class="ui-body ui-body-a ui-corner-all" align="center">
-                <ul style="list-style-type:none"></ul>
+                <ul data-role="listview" style="list-style-type:none; overflow: visible; text-overflow: clip; white-space: normal;"></ul>
             </div>
         </div>
         </div>
